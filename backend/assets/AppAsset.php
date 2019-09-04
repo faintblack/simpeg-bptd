@@ -24,6 +24,8 @@ class AppAsset extends AssetBundle
         'plugins/datatables/fixedHeader.bootstrap.min.css',
         'plugins/morris/morris.css',
         'plugins/bootstrap-sweetalert/sweet-alert.css',
+
+        'css/me.css',
         
     ];
     public $js = [
@@ -37,6 +39,9 @@ class AppAsset extends AssetBundle
         'js/wow.min.js',
         'js/jquery.nicescroll.js',
         'js/jquery.scrollTo.min.js',
+
+        'plugins/datatables/jquery.dataTables.min.js',
+        'plugins/datatables/dataTables.bootstrap.js',
 
         'js/jquery.core.js',
         'js/jquery.app.js',
