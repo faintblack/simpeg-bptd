@@ -73,11 +73,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 </thead>
                 <tbody>
                     <?php
+                        $map = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
                         foreach ($dataProvider->models as $key => $v) {
+                            $romawi = "";
+                            $kelas = substr($v['golongan'], -1);
+                            $number = substr($v['golongan'], 0, -1);
+                            while ($number != 0) {
+                                foreach ($map as $roman => $nilai) {
+                                    if ($number >= $nilai) {
+                                        $number -= $nilai;
+                                        $romawi .= $roman;
+                                    }
+                                }
+                            }
+                            
                     ?>
                     <tr>
                         <td><?= $key+1 ?></td>
-                        <td><?= $v['golongan'] ?></td>
+                        <td><?= "{$romawi}/{$kelas}" ?></td> <!-- $romawi.'/'.$kelas -->
                         <td><?= $v['pangkat'] ?></td>
                         <td class="text-center">
                             <a href="<?= Url::to(); ?>" class=" ti-info "></a>

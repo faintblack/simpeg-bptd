@@ -7,6 +7,16 @@ use yii\helpers\Url;
         <div id="sidebar-menu">
             <ul>
                 <li>
+                    <a href="<?= Url::toRoute(['/site']) ?>" class="waves-effect <?php
+                        if (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id =="index") {
+                            echo "active";
+                        }
+                    ?>">
+                        <i class="ti-home"></i>  <span> Dashboard </span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="<?= Url::to(['/golongan']) ?>" class="waves-effect">
                         <i class="ti-home"></i>  <span> Data Golongan </span>
                     </a>
