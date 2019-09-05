@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use backend\assets\AppAsset;
+use common\models\LoginForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\Nav;
@@ -26,16 +27,24 @@ AppAsset::register($this);
 </head>
 <body class="fixed-left">
 <?php $this->beginBody() ?>
-
+<?php
+if (Yii::$app->controller->action->id == "login") {
+    $model = new LoginForm();
+    echo $this->render('login.php', ['model' => $model]) ;
+} else {
+?>
 <div id="wrapper">
 
-    <?= $this->render('topbar.php') ?>
+<?= $this->render('topbar.php') ?>
 
-    <?= $this->render('sidebar.php') ?>
+<?= $this->render('sidebar.php') ?>
 
-    <?= $this->render('content.php', ['content' => $content]) ?>
+<?= $this->render('content.php', ['content' => $content]) ?>
 
 </div>
+<?php
+}
+?>
 <script>
     var resizefunc = [];
 </script>

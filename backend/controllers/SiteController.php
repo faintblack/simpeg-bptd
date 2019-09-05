@@ -28,14 +28,14 @@ class SiteController extends Controller
                     [
                         'actions' => ['logout', 'index'],
                         'allow' => true,
-                        //'roles' => ['@'],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['post','get'],
                 ],
             ],
         ];
@@ -75,7 +75,9 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        //print_r($model);exit();
+        if ($model->load(Yii::$app->request->post()) ) {       
+            $model->login();
             return $this->goBack();
         } else {
             $model->password = '';

@@ -42,17 +42,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
     <div class="col-sm-12">
         <h4 class="page-title"><?= $this->title; ?></h4>
-        <ol class="breadcrumb">
-            <?php
-                foreach ($this->params['breadcrumbs'] as $key => $value) {
-            ?>
-            <li>
-                <p><?= $value ?></p>
-            </li>
-            <?php
-                }
-            ?>
-        </ol>
         
         <!-- Tombol tambah golongan -->
         <p>
