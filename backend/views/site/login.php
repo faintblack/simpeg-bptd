@@ -1,9 +1,14 @@
 <?php
 
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
 
 ?>
-<?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+<?php $form = ActiveForm::begin(['id' => 'login-form', 
+    'options' => [
+        'class' => 'form-horizontal'
+    ]
+]); ?>
     <!-- <form class="form-horizontal m-t-20" action="index.html">          -->      
     <div class="form-group ">
         <div class="col-xs-12">
@@ -19,9 +24,10 @@ use yii\bootstrap\ActiveForm;
         </div>
     </div>
     
-    <div class="form-group text-center m-t-40">
-        <div class="col-xs-12">
-            <button class="btn btn-pink btn-block text-uppercase waves-effect waves-light" type="submit">Log In</button>
+    <div class="form-group" style="margin-top:20px">
+        <div class="col-xs-12" style="padding: 0px;">
+            <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block text-uppercase waves-effect waves-light', 'name' => 'login-button']) ?> 
+            <!--<button class="btn btn-pink btn-block text-uppercase waves-effect waves-light" type="submit">Log In</button>-->            
         </div>
     </div>
 
