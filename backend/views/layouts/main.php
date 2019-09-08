@@ -29,8 +29,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 <?php
 if (Yii::$app->controller->action->id == "login") {
-    $model = new LoginForm();
-    echo $this->render('login.php', ['model' => $model]) ;
+    echo $this->render('main-login.php', ['content' => $content]) ;
 } else {
 ?>
 <div id="wrapper">
