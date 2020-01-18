@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
         'plugins/datatables/fixedHeader.bootstrap.min.css',
         'plugins/morris/morris.css',
         'plugins/bootstrap-sweetalert/sweet-alert.css',
+        'plugins/custombox/css/custombox.css',
 
         'css/me.css',
         
@@ -42,6 +43,8 @@ class AppAsset extends AssetBundle
 
         'plugins/datatables/jquery.dataTables.min.js',
         'plugins/datatables/dataTables.bootstrap.js',
+        'plugins/custombox/js/custombox.min.js',
+        'plugins/custombox/js/legacy.min.js',
 
         'js/jquery.core.js',
         'js/jquery.app.js',

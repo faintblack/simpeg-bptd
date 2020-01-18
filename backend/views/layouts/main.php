@@ -34,11 +34,11 @@ if (Yii::$app->controller->action->id == "login") {
 ?>
 <div id="wrapper">
 
-<?= $this->render('topbar.php') ?>
+    <?= $this->render('topbar.php') ?>
 
-<?= $this->render('sidebar.php') ?>
+    <?= $this->render('sidebar.php') ?>
 
-<?= $this->render('content.php', ['content' => $content]) ?>
+    <?= $this->render('content.php', ['content' => $content]) ?>
 
 </div>
 <?php

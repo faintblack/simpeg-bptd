@@ -38,12 +38,16 @@ class LoginForm extends Model
      *
      * @param string $attribute the attribute currently being validated
      * @param array $params the additional name-value pairs given in the rule
+     * FUNCTION INI JALAN OTOMATIS KARENA DI RULES DIATUR PASSWORD HARUS MENJALANKAN FUNCTION VALIDATEPASSWORD
      */
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
             
             $user = $this->getUser();
+            // Set password hash
+            $user->setPassword($this->password);
+
             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
                 //print_r('ada');exit();
@@ -61,6 +65,7 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
+            // proses login berdasarkan data user yang berada pada model IdentityInterface
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
         

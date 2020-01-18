@@ -66,6 +66,14 @@ class GolonganController extends Controller
     {
         $model = new Golongan();
 
+        $data = Golongan::findOne(['id_golongan' => 4]);
+        print_r($data->attributes);exit();
+
+        if (Yii::$app->request->post()) {
+            $data = Yii::$app->request->post();
+            print_r($data['Golongan']);exit();     
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_golongan]);
         }
@@ -107,6 +115,19 @@ class GolonganController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionGetJsonData(){
+        if (Yii::$app->request->isAjax) {
+            $id = Yii::$app->request->post();
+            //$data = Golongan::findOne(['id_golongan' => $id['id_golongan']]);
+            $data = $this->findModel($id['id_golongan']);
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return $data;
+        }
+        //$data = $this->findModel($_POST['id_golongan']);
+        //print_r($data);exit();
+		//echo json_encode($data);
     }
 
     /**

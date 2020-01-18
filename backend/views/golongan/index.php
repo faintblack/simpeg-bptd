@@ -1,5 +1,7 @@
 <?php
 
+use backend\models\Golongan;
+use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
@@ -9,36 +11,17 @@ use yii\helpers\Url;
 
 $this->title = 'Data Golongan';
 $this->params['breadcrumbs'][] = $this->title;
+
+if (isset($_POST['id_edit'])) {
+    //print_r($_POST['id_edit']);
+   // $a = ['id_golongan' => $_POST['id_edit']];
+
+    echo json_encode($_POST['id_edit']);
+    //die();
+}
+//print_r($_POST['id_edit']);exit();
+
 ?>
-<!--
-<div class="golongan-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Golongan', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'layout' => "{items}\n{summary}\n{pager}",
-        'columns' => [
-            [
-                'class' => 'yii\grid\SerialColumn',
-                'header' => 'No.'
-            ],
-
-            'golongan',
-            'pangkat',
-
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'header' => 'Aksi'
-            ],
-        ],
-    ]); ?>
-</div>
--->
 <div class="row">
     <div class="col-sm-12">
         <h4 class="page-title"><?= $this->title; ?></h4>
@@ -50,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
          
         <!-- Tabel -->
         <div class="card-box table-responsive">
-            <h4 class="m-t-0 header-title"><b>Tabel Data Golongan</b></h4>
+            <h4 class="m-t-0 header-title"><b>Tabel Data Golongan </b></h4>
             <table id="datatable" class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -83,8 +66,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td><?= $v['pangkat'] ?></td>
                         <td class="text-center">
                             <a href="<?= Url::to(); ?>" class=" ti-info "></a>
-                            <a href="" class=" ti-pencil" data-toggle="modal" data-target="#Modal"></a>
-                            <a href="" class=" ti-trash" data-toggle="modal" data-target="#Modal1"></a>
+                            <a href="" class="ti-pencil modalEdit" data-toggle="modal" data-target="#modal-edit" data-id="<?= $v['id_golongan'] ?>"></a>
+                            <a href="" class="ti-trash" data-toggle="modal" data-target="#modal-hapus"></a>
                         </td>
                     </tr> 
                     <?php
@@ -94,6 +77,87 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tbody>
             </table>
         </div>
-        
+
+        <!-- Modal Edit -->
+        <?php
+        if (isset($_POST['id_edit'])) {
+            //print_r($_POST['id_edit']);exit();
+            $model = Golongan::findOne(['id_golongan' => $_POST['id_edit']]);
+        }
+        ?>
+        <div id="modal-edit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog"> 
+                <div class="modal-content">
+                    <?php $form = ActiveForm::begin(); ?>
+                        <div class="modal-header"> 
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                            <h4 class="modal-title">Edit Data Golongan</h4> 
+                        </div> 
+                        <div class="modal-body"> 
+                            <div class="row"> 
+                                <div class="col-md-12"> 
+                                    <div class="form-group"> 
+                                        <label for="field-1" class="control-label">Nama Golongan</label> 
+                                        <!--<input type="text" class="form-control" id="nama_golongan-edit" placeholder="Contoh : 3a">-->
+                                        <?php
+                                        if(isset($model)){
+                                        ?>
+                                        <?= $form->field($model, 'golongan')->textInput(['maxlength' => TRUE]) ?>
+                                        <?php
+                                        }
+                                        ?>
+                                        
+                                    </div> 
+                                </div>
+                            </div> 
+                            <div class="row"> 
+                                <div class="col-md-12"> 
+                                    <div class="form-group"> 
+                                        <label for="field-3" class="control-label">Pangkat</label> 
+                                        <input type="text" class="form-control" id="pangkat-edit" placeholder="Contoh : Penata Muda"> 
+                                    </div> 
+                                </div> 
+                            </div>
+                        </div> 
+                        <div class="modal-footer"> 
+                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
+                            <button type="button" class="btn btn-info waves-effect waves-light">Save changes</button> 
+                        </div>
+                    <?php ActiveForm::end(); ?>
+                    
+                </div> 
+            </div>
+        </div>
     </div>
 </div>
+<script>
+    window.onload = function(){
+        $('.modalEdit').on('click', function(){
+            const id = $(this).data('id');
+            
+            $.ajax({
+                url : "<?= Url::to(['get-json-data']) ?>",
+                data : {id_golongan : id},
+                method : 'POST',
+                dataType : 'JSON',
+                success : function(hasil){
+                    console.log(hasil);
+                    //$('#nama_golongan-edit').val(hasil.golongan);
+                    //$('#pangkat-edit').val(hasil.pangkat);
+
+                    $.ajax({
+                        url : '<?= Url::to(['index']) ?>',
+                        method : 'POST',
+                        //dataType : 'json',
+                        data : {id_edit : id},
+                        success : function(re){
+                            console.log(re);
+                        }
+                    });
+
+                }
+            });
+
+        });
+    }
+</script>
