@@ -8,10 +8,8 @@ use Yii;
  * This is the model class for table "golongan".
  *
  * @property int $id_golongan
- * @property string $golongan
+ * @property string $kode_golongan
  * @property string $pangkat
- *
- * @property Pegawai[] $pegawais
  */
 class Golongan extends \yii\db\ActiveRecord
 {
@@ -29,9 +27,10 @@ class Golongan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['golongan', 'pangkat'], 'required'],
-            [['golongan'], 'string', 'max' => 2],
+            [['kode_golongan', 'pangkat'], 'required'],
+            [['kode_golongan'], 'string', 'max' => 2],
             [['pangkat'], 'string', 'max' => 50],
+            [['kode_golongan'], 'unique'],
         ];
     }
 
@@ -42,16 +41,8 @@ class Golongan extends \yii\db\ActiveRecord
     {
         return [
             'id_golongan' => 'Id Golongan',
-            'golongan' => 'Golongan',
+            'kode_golongan' => 'Kode Golongan',
             'pangkat' => 'Pangkat',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPegawais()
-    {
-        return $this->hasMany(Pegawai::className(), ['id_golongan' => 'id_golongan']);
     }
 }

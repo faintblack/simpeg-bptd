@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use app\models\Golongan as ModelsGolongan;
 use Yii;
 use backend\models\Golongan;
 use yii\data\ActiveDataProvider;
@@ -36,7 +37,7 @@ class GolonganController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Golongan::find(),
+            'query' => Golongan::find()->orderBy(['kode_golongan' => SORT_DESC]),
         ]);
 
         return $this->render('index', [
@@ -66,16 +67,8 @@ class GolonganController extends Controller
     {
         $model = new Golongan();
 
-        $data = Golongan::findOne(['id_golongan' => 4]);
-        print_r($data->attributes);exit();
-
-        if (Yii::$app->request->post()) {
-            $data = Yii::$app->request->post();
-            print_r($data['Golongan']);exit();     
-        }
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_golongan]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -93,6 +86,7 @@ class GolonganController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        print_r($model);exit();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_golongan]);
@@ -101,6 +95,11 @@ class GolonganController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionUpdate2($id){
+        $model = $this->findModel($id);
+        print_r($model);exit();
     }
 
     /**
@@ -118,7 +117,7 @@ class GolonganController extends Controller
     }
 
     public function actionGetJsonData(){
-        if (Yii::$app->request->isAjax) {
+        if (Yii::$app->request->isAjax && Yii::$app->request->post()) {
             $id = Yii::$app->request->post();
             //$data = Golongan::findOne(['id_golongan' => $id['id_golongan']]);
             $data = $this->findModel($id['id_golongan']);

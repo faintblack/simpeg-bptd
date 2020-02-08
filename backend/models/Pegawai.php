@@ -7,16 +7,19 @@ use Yii;
 /**
  * This is the model class for table "pegawai".
  *
- * @property int $NIP
+ * @property string $NIP
  * @property string $nama
  * @property int $id_golongan
  * @property string $tmt_pangkat
  * @property string $jabatan
+ * @property string $sk_jabatan
+ * @property string $tgl_sk_jabatan
  * @property string $tmt_jabatan
  * @property string $tmt_cpns
  * @property string $tempat_lahir
  * @property string $tanggal_lahir
  * @property string $catatan_mutasi
+ * @property string $keterangan
  *
  * @property DiklatPegawai[] $diklatPegawais
  * @property Golongan $golongan
@@ -38,13 +41,14 @@ class Pegawai extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['NIP', 'nama', 'id_golongan', 'tmt_pangkat', 'jabatan', 'tmt_jabatan', 'tmt_cpns', 'tempat_lahir', 'tanggal_lahir', 'catatan_mutasi'], 'required'],
-            [['NIP', 'id_golongan'], 'integer'],
-            [['tmt_pangkat', 'tmt_jabatan', 'tmt_cpns', 'tanggal_lahir'], 'safe'],
+            [['NIP', 'nama', 'id_golongan', 'tmt_pangkat', 'jabatan', 'sk_jabatan', 'tgl_sk_jabatan', 'tmt_jabatan', 'tmt_cpns', 'tempat_lahir', 'tanggal_lahir', 'catatan_mutasi', 'keterangan'], 'required'],
+            [['id_golongan'], 'integer'],
+            [['tmt_pangkat', 'tgl_sk_jabatan', 'tmt_jabatan', 'tmt_cpns', 'tanggal_lahir'], 'safe'],
+            [['NIP'], 'string', 'max' => 19],
             [['nama'], 'string', 'max' => 80],
-            [['jabatan'], 'string', 'max' => 350],
+            [['jabatan', 'sk_jabatan', 'catatan_mutasi'], 'string', 'max' => 250],
             [['tempat_lahir'], 'string', 'max' => 50],
-            [['catatan_mutasi'], 'string', 'max' => 250],
+            [['keterangan'], 'string', 'max' => 16],
             [['NIP'], 'unique'],
             [['id_golongan'], 'exist', 'skipOnError' => true, 'targetClass' => Golongan::className(), 'targetAttribute' => ['id_golongan' => 'id_golongan']],
         ];
@@ -61,11 +65,14 @@ class Pegawai extends \yii\db\ActiveRecord
             'id_golongan' => 'Id Golongan',
             'tmt_pangkat' => 'Tmt Pangkat',
             'jabatan' => 'Jabatan',
+            'sk_jabatan' => 'Sk Jabatan',
+            'tgl_sk_jabatan' => 'Tgl Sk Jabatan',
             'tmt_jabatan' => 'Tmt Jabatan',
             'tmt_cpns' => 'Tmt Cpns',
             'tempat_lahir' => 'Tempat Lahir',
             'tanggal_lahir' => 'Tanggal Lahir',
             'catatan_mutasi' => 'Catatan Mutasi',
+            'keterangan' => 'Keterangan',
         ];
     }
 
