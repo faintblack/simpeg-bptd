@@ -66,7 +66,7 @@ if (isset($_POST['id_edit'])) {
                         <td><?= $v['pangkat'] ?></td>
                         <td class="text-center">
                             <a href="<?= Url::to(['view', 'id' => $v->id_golongan]); ?>" class=" ti-info "></a>
-                            <a onclick="editLink('<?= Url::to(['update2','id' => $v->id_golongan]) ?>')" href="" class="ti-pencil modalEdit" data-toggle="modal" data-target="#modal-edit" data-id="<?= $v['id_golongan'] ?>"></a>
+                            <a onclick="editLink('<?= Url::to(['update','id' => $v->id_golongan]) ?>')" href="" class="ti-pencil modalEdit" data-toggle="modal" data-target="#modal-edit" data-id="<?= $v['id_golongan'] ?>"></a>
                             <a onclick="deleteLink('<?= Url::to(['delete','id' => $v->id_golongan]) ?>')" href="" class="ti-trash" data-toggle="modal" data-target="#custom-width-modal"></a>
                         </td>
                     </tr> 
@@ -77,69 +77,13 @@ if (isset($_POST['id_edit'])) {
                 </tbody>
             </table>
             <!-- Modal Hapus -->
-            <div id="custom-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true" style="display: none;">
-                <div class="modal-dialog" style="width:35%;">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title" id="custom-width-modalLabel">Hapus <?= $this->title ?></h4>
-                        </div>
-                        <div class="modal-body">
-                            <h5>Apa anda yakin ingin menghapus <?= $this->title ?> ini ? </h5>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Batal</button>
-                            <a id="modal-delete-button" data-method="post" type="button" class="btn btn-primary waves-effect waves-light">Hapus</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?= $this->render('../additional/modal-delete'); ?>            
             <!-- Modal Edit -->
-            <div id="modal-edit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                <div class="modal-dialog"> 
-                    <div class="modal-content">
-                        <!-- #Next buat function khusus untuk edit golongan, worth it or not? -->
-                        <form id="form-edit-golongan" method="post" action="">
-                            <div class="modal-header"> 
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
-                                <h4 class="modal-title">Edit <?= $this->title ?></h4> 
-                            </div> 
-                            <div class="modal-body">
-                                <div class="row"> 
-                                    <div class="col-md-12"> 
-                                        <div class="form-group"> 
-                                            <label for="field-1" class="control-label">Kode Golongan</label> 
-                                            <input type="text" class="form-control" id="kode_golongan-edit" name="kode_golongan" placeholder="Contoh : 3a" autofocus>
-                                        </div> 
-                                    </div>
-                                </div> 
-                                <div class="row"> 
-                                    <div class="col-md-12"> 
-                                        <div class="form-group"> 
-                                            <label for="field-3" class="control-label">Pangkat</label> 
-                                            <input type="text" class="form-control" id="pangkat-edit" name="pangkat" placeholder="Contoh : Penata Muda"> 
-                                        </div> 
-                                    </div> 
-                                </div>
-                            </div> 
-                            <div class="modal-footer"> 
-                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
-                                <button type="submit" class="btn btn-info waves-effect waves-light">Save changes</button> 
-                            </div>
-                        </form>
-                    </div> 
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Edit -->
-        <?php
-        if (isset($_POST['id_edit'])) {
-            //print_r($_POST['id_edit']);exit();
-            $model = Golongan::findOne(['id_golongan' => $_POST['id_edit']]);
-        }
-        ?>
-        
+            <?php
+            $edit_model = new Golongan();
+            echo $this->render('modal-edit',['model' => $edit_model]);
+            ?>
+        </div>        
     </div>
 </div>
 <script type="text/javascript">
@@ -170,11 +114,9 @@ if (isset($_POST['id_edit'])) {
 
         });  
     });
-    function deleteLink(link){
-        $('#modal-delete-button').attr('href', link);
-    }
+    
     function editLink(link){
-        $('#form-edit-golongan').attr('action', link);
+        $('#edit-form').attr('action', link);
     }
     
 </script>

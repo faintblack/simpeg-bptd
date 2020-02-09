@@ -47,7 +47,7 @@ if (Yii::$app->controller->action->id == "login") {
 <script>
     var resizefunc = [];
 </script>
-<script type="text/javascript">
+<script type="text/javascript">    
     $(document).ready(function () {
         $('#datatable').dataTable();
         $('#datatable-keytable').DataTable({keys: true});
@@ -77,7 +77,9 @@ if (Yii::$app->controller->action->id == "login") {
             }
         });
     });
-
+    function deleteLink(link){
+        $('#modal-delete-button').attr('href', link);
+    }
 </script>
 
 <?php $this->endBody() ?>

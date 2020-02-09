@@ -86,20 +86,14 @@ class GolonganController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        print_r($model);exit();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_golongan]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
-    }
-
-    public function actionUpdate2($id){
-        $model = $this->findModel($id);
-        print_r($model);exit();
     }
 
     /**
