@@ -3,14 +3,14 @@
 use yii\widgets\ActiveForm;
 
 ?>
-<div id="modal-edit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div id="modal-golongan" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog"> 
         <div class="modal-content">
             <!-- #Next buat function khusus untuk edit golongan, worth it or not? -->
-            <?php $form = ActiveForm::begin(['id' => 'edit-form']); ?>
+            <?php $form = ActiveForm::begin(['id' => 'golongan-form']); ?>
                 <div class="modal-header"> 
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
-                    <h4 class="modal-title">Edit <?= $this->title ?></h4> 
+                    <h4 id="modal-title" class="modal-title">Data Golongan</h4> 
                 </div> 
                 <div class="modal-body">
                     <div class="row"> 
@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
                                     'maxlength' => true, 
                                     'autofocus' => true,
                                     'placeholder' => 'Contoh : 3a, 4b, 3c, dsb.',
-                                    'id' => 'kode_golongan-edit'
+                                    'id' => 'kode_golongan'
                                     ]) ?>
                             </div> 
                         </div>
@@ -31,8 +31,8 @@ use yii\widgets\ActiveForm;
                                 <?= $form->field($model, 'pangkat')->textInput([
                                     'maxlength' => true, 
                                     'autofocus' => true,
-                                    'placeholder' => 'Contoh : 3a, 4b, 3c, dsb.',
-                                    'id' => 'pangkat-edit'
+                                    'placeholder' => 'Contoh : Pembina Muda, Penata Muda',
+                                    'id' => 'pangkat'
                                     ]) ?>
                             </div> 
                         </div> 

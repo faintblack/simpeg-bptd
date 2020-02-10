@@ -28,7 +28,7 @@ if (isset($_POST['id_edit'])) {
         
         <!-- Tombol tambah golongan -->
         <p>
-            <?= Html::a('Tambah Golongan', ['create'], ['class' => 'btn btn-success']) ?>  
+            <a onclick="addLink('<?= Url::to(['create']) ?>')" href="" class="btn btn-success" data-toggle="modal" data-target="#modal-golongan" >Tambah Golongan</a>
         </p>
          
         <!-- Card Box -->
@@ -66,7 +66,7 @@ if (isset($_POST['id_edit'])) {
                         <td><?= $v['pangkat'] ?></td>
                         <td class="text-center">
                             <a href="<?= Url::to(['view', 'id' => $v->id_golongan]); ?>" class=" ti-info "></a>
-                            <a onclick="editLink('<?= Url::to(['update','id' => $v->id_golongan]) ?>')" href="" class="ti-pencil modalEdit" data-toggle="modal" data-target="#modal-edit" data-id="<?= $v['id_golongan'] ?>"></a>
+                            <a onclick="editLink('<?= Url::to(['update','id' => $v->id_golongan]) ?>')" href="" class="ti-pencil modalEdit" data-toggle="modal" data-target="#modal-golongan" data-id="<?= $v['id_golongan'] ?>"></a>
                             <a onclick="deleteLink('<?= Url::to(['delete','id' => $v->id_golongan]) ?>')" href="" class="ti-trash" data-toggle="modal" data-target="#custom-width-modal"></a>
                         </td>
                     </tr> 
@@ -78,10 +78,10 @@ if (isset($_POST['id_edit'])) {
             </table>
             <!-- Modal Hapus -->
             <?= $this->render('../additional/modal-delete'); ?>            
-            <!-- Modal Edit -->
+            <!-- Modal Tambah & Edit -->
             <?php
-            $edit_model = new Golongan();
-            echo $this->render('modal-edit',['model' => $edit_model]);
+            $golongan_model = new Golongan();
+            echo $this->render('modal',['model' => $golongan_model]);
             ?>
         </div>        
     </div>
@@ -97,26 +97,21 @@ if (isset($_POST['id_edit'])) {
                 dataType : 'JSON',
                 success : function(hasil){
                     console.log(hasil);
-                    $('#kode_golongan-edit').val(hasil.kode_golongan);
-                    $('#pangkat-edit').val(hasil.pangkat);
-                    /*
-                    $.ajax({
-                        url : '<?= Url::to(['index']) ?>',
-                        method : 'POST',
-                        //dataType : 'json',
-                        data : {id_edit : id},
-                        success : function(re){
-                            console.log(re);
-                        }
-                    });*/
+                    $('#kode_golongan').val(hasil.kode_golongan);
+                    $('#pangkat').val(hasil.pangkat);
                 }
             });
 
-        });  
+        });
     });
-    
-    function editLink(link){
-        $('#edit-form').attr('action', link);
+    function addLink(link){
+        $('#golongan-form').attr('action', link);
+        $('#modal-title').html('Tambah Data Golongan');
+        $('#kode_golongan').val('');
+        $('#pangkat').val('');
     }
-    
+    function editLink(link){
+        $('#golongan-form').attr('action', link);
+        $('#modal-title').html('Edit Data Golongan');
+    }    
 </script>
